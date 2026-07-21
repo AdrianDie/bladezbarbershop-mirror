@@ -1,0 +1,102 @@
+/* Visual refinements layered on top of the original Timma theme. */
+
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Font Awesome's own sizing CSS was injected at runtime by the React app and never
+   captured by the mirror, leaving icons rendered at their raw SVG viewBox size. */
+.svg-inline--fa {
+  display: inline-block;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Sticky header: subtle separation from content */
+.sticky.top-0.z-10 {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Desktop nav: animated underline on hover, skip the current page (already has its own indicator) */
+ul.hidden.md\:flex li a {
+  position: relative;
+}
+ul.hidden.md\:flex li a:not([aria-current="page"])::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s var(--ease-out);
+}
+ul.hidden.md\:flex li a:not([aria-current="page"]):hover::after {
+  transform: scaleX(1);
+}
+
+/* CTA buttons: gentle lift + shadow feedback */
+a.rounded-button,
+button.rounded-button {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background-color 0.2s ease;
+}
+a.rounded-button:hover,
+button.rounded-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+a.rounded-button:active,
+button.rounded-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* Photography: soften corners, add depth, subtle zoom on hover */
+.aspect-square {
+  border-radius: 14px;
+  overflow: hidden;
+}
+.aspect-square img {
+  transition: transform 0.6s var(--ease-out);
+}
+.aspect-square:hover img {
+  transform: scale(1.035);
+}
+
+/* Roomier section rhythm on larger screens */
+@media (min-width: 992px) {
+  section.py-6 {
+    padding-top: 88px;
+    padding-bottom: 88px;
+  }
+}
+
+/* Footer: clearer separation from content above */
+.bg-bg1.pt-2 {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Footer contact icons: slightly larger tap target, consistent alignment */
+footer svg,
+.bg-bg1.pt-2 svg {
+  vertical-align: -2px;
+}
+
+/* Mobile menu dialog: smoother open/close handled via mobile-nav.js toggling these classes */
+dialog[open] {
+  transition: opacity 0.3s var(--ease-out);
+}
