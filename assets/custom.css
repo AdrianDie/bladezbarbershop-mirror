@@ -1,7 +1,28 @@
-/* Visual refinements layered on top of the original Timma theme. */
+/* Premium dark/gold theme, inspired by the internal barber template.
+   The Timma-generated markup drives all its colors through CSS custom
+   properties (--color_bg1_500 etc.), so the whole site can be re-themed
+   by overriding those variables here — no HTML restructuring needed. */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap');
 
 :root {
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+
+  --color_primary_text: 13 13 13;   /* text on gold buttons */
+  --color_bg1_text: 232 232 232;    /* body text, light-on-dark */
+  --color_bg2: 20 20 20;            /* secondary section bg (was beige) */
+  --color_bg2_text: 232 232 232;
+  --color_primary_300: 232 201 106; /* gold-light, button hover */
+  --color_primary_500: 201 168 76;  /* gold, button bg */
+  --color_primary_600: 168 138 58;  /* darker gold, button active */
+  --color_bg1_250: 28 28 28;
+  --color_bg1_400: 24 24 24;
+  --color_bg1_500: 13 13 13;        /* main bg (was white) */
+  --color_bg1_525: 20 20 20;
+  --font_family_heading: 'Manrope', sans-serif;
+  --letter_spacing_heading: -0.02em;
 }
 
 /* Font Awesome's own sizing CSS was injected at runtime by the React app and never
@@ -23,9 +44,9 @@ html {
   html { scroll-behavior: auto; }
 }
 
-/* Sticky header: subtle separation from content */
+/* Sticky header: subtle gold-tinted separation from content */
 .sticky.top-0.z-10 {
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 0 rgba(201, 168, 76, 0.15);
 }
 
 /* Desktop nav: animated underline on hover, skip the current page (already has its own indicator) */
@@ -48,33 +69,35 @@ ul.hidden.md\:flex li a:not([aria-current="page"]):hover::after {
   transform: scaleX(1);
 }
 
-/* CTA buttons: gentle lift + shadow feedback */
+/* CTA buttons: gentle lift + gold glow feedback */
 a.rounded-button,
 button.rounded-button {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background-color 0.2s ease;
 }
 a.rounded-button:hover,
 button.rounded-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 10px 28px rgba(201, 168, 76, 0.3);
 }
 a.rounded-button:active,
 button.rounded-button:active {
   transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 8px rgba(201, 168, 76, 0.2);
 }
 
-/* Photography: soften corners, add depth, subtle zoom on hover */
+/* Photography: soften corners, add depth, subtle zoom + color pop on hover */
 .aspect-square {
   border-radius: 14px;
   overflow: hidden;
 }
 .aspect-square img {
-  transition: transform 0.6s var(--ease-out);
+  transition: transform 0.6s var(--ease-out), filter 0.5s ease;
+  filter: grayscale(15%);
 }
 .aspect-square:hover img {
   transform: scale(1.035);
+  filter: grayscale(0%);
 }
 
 /* Roomier section rhythm on larger screens */
@@ -87,7 +110,7 @@ button.rounded-button:active {
 
 /* Footer: clearer separation from content above */
 .bg-bg1.pt-2 {
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
 }
 
 /* Footer contact icons: slightly larger tap target, consistent alignment */
@@ -113,4 +136,118 @@ dialog[open] {
   .flex-col.items-center.gap-6 > div.md\:flex.md\:gap-5 > div.w-full > a.rounded-button {
     clear: both;
   }
+}
+
+/* ---- New section components, styled after the barber template ---- */
+
+.gold-text {
+  color: var(--gold);
+}
+
+.label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  display: block;
+}
+
+.gold-line {
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin-top: 40px;
+}
+@media (min-width: 768px) {
+  .value-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.value-card {
+  background: rgb(var(--color_bg1_500));
+  padding: 32px 24px;
+  transition: background-color 0.2s ease;
+}
+.value-card:hover {
+  background: rgb(var(--color_bg1_250));
+}
+.value-icon {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--gold);
+}
+.value-card h3 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+.value-card p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 8px;
+}
+.cta-secondary {
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  color: var(--gold);
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0 28px;
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  border-radius: 8px;
+}
+.cta-secondary:hover {
+  border-color: var(--gold);
+  background: rgba(201, 168, 76, 0.08);
+}
+
+/* Scroll-reveal: content is visible by default. reveal.js adds "reveal-ready" to <html>
+   only once it has successfully set up the observer, so a blocked/broken script can
+   never leave sections permanently invisible. */
+@media (prefers-reduced-motion: no-preference) {
+  html.reveal-ready [data-animate],
+  html.reveal-ready [data-stagger] > * {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  }
+  html.reveal-ready [data-animate].is-visible,
+  html.reveal-ready [data-stagger].is-visible > * {
+    opacity: 1;
+    transform: none;
+  }
+  html.reveal-ready [data-stagger].is-visible > *:nth-child(2) { transition-delay: 0.08s; }
+  html.reveal-ready [data-stagger].is-visible > *:nth-child(3) { transition-delay: 0.16s; }
+  html.reveal-ready [data-stagger].is-visible > *:nth-child(4) { transition-delay: 0.24s; }
 }
