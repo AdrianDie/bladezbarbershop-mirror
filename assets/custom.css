@@ -100,3 +100,17 @@ footer svg,
 dialog[open] {
   transition: opacity 0.3s var(--ease-out);
 }
+
+/* Behandlinger price blocks: on the live site each category photo is floated beside its
+   price list. That layout is computed client-side, so the frozen mirror's markup nests the
+   photo and price list as plain stacked siblings instead — leaving a large empty gap next
+   to a small image. Recreate the intended layout with a right float. */
+@media (min-width: 768px) {
+  .flex-col.items-center.gap-6 > div.md\:flex.md\:gap-5 > div.w-full > .aspect-square {
+    float: right;
+    margin: 0 0 24px 32px;
+  }
+  .flex-col.items-center.gap-6 > div.md\:flex.md\:gap-5 > div.w-full > a.rounded-button {
+    clear: both;
+  }
+}
