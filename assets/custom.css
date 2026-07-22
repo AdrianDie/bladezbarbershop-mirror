@@ -108,6 +108,43 @@ button.rounded-button:active {
   }
 }
 
+/* "Velkommen til..." intro: was a small floating square photo lost in a lot of empty
+   section space. Recreate an edge-to-edge photo/text split instead, like the internal
+   barber template's about section. */
+@media (min-width: 768px) {
+  .about-split section.py-6 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .about-split section.py-6 > div.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    align-items: stretch;
+    gap: 0;
+    min-height: 520px;
+  }
+  .about-split section.py-6 > div.grid > div:nth-child(1) {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 56px;
+  }
+  .about-split section.py-6 > div.grid > div:nth-child(2) {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    padding: 0;
+    aspect-ratio: auto;
+    border-radius: 0;
+    height: 100%;
+  }
+  .about-split section.py-6 > div.grid > div:nth-child(2) img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}
+
 /* Footer: clearer separation from content above */
 .bg-bg1.pt-2 {
   border-top: 1px solid rgba(201, 168, 76, 0.15);
